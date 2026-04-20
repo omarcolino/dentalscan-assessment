@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import {
+  handleScanCompletedNotification,
+  type NotifyPayload,
+} from "@/services/notificationService";
+import { notificationCreatedResource } from "@/resources/notificationResource";
 
 /**
  * CHALLENGE: NOTIFICATION SYSTEM
@@ -14,21 +16,35 @@ const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { scanId, status } = body;
+    const body = (await req.json()) as Partial<NotifyPayload>;
+    const scanId = body.scanId?.trim();
+    const status = body.status?.trim();
+    const userId = body.userId?.trim();
+
+    if (!scanId || !status || !userId) {
+      return NextResponse.json(
+        { error: "scanId, status e userId são obrigatórios" },
+        { status: 400 }
+      );
+    }
 
     if (status === "completed") {
-      // TODO: Implement the notification creation logic here
-      // example: await prisma.notification.create({ ... })
-      
-      console.log(`[STUB] Notification triggered for scan ${scanId}`);
-      
-      return NextResponse.json({ ok: true, message: "Notification triggered" });
+      const result = await handleScanCompletedNotification({
+        scanId,
+        status,
+        userId,
+      });
+
+      return NextResponse.json(
+        notificationCreatedResource({
+          scanId: result.scan.id,
+          notificationId: result.notification.id,
+        })
+      );
     }
 
     return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error("Notification API Error:", err);
+  } catch {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
