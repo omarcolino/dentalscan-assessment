@@ -1,10 +1,14 @@
 ## DentalScan Discovery Audit
 
-DentalScan has a strong value proposition and clear product narrative, but some interaction patterns create uncertainty and can reduce user trust during critical moments.
+DentalScan communicates its value clearly, but the user journey has friction points that can reduce trust and completion rate.
 
-1. Misleading UI interactivity (dead-ends): "Learn More" and demo cards visually behave like clickable elements (hover/pointer) but do not trigger navigation/actions. This increases cognitive load and creates a broken experience signal.
-2. State uncertainty in success feedback: the "Get Started" success toast disappears too quickly. Users may not confirm completion and can click again, generating redundant requests. A persistent success state or explicit dismiss action would improve reliability and reduce duplicate submissions.
-3. Validation and recovery flow gaps: "Forgot Password" appears to lack immediate client-side email validation. Invalid input reaching backend can increase avoidable server load and support tickets. Real-time validation and inline error messaging are recommended.
-4. Onboarding friction due to geographic restriction: the discovery scan flow currently requires a US phone number. As an international developer, I could not complete the full 5-angle scan on the live site. This also limits practical testing of camera stability across regions/devices.
+From the website experience:
 
-Technical risks for mobile capture remain: camera shake, autofocus oscillation, low-light blur/noise, and browser/device variability (especially iOS Safari permission handling). I recommend a "Mock Scan" mode for non-US/internal stakeholders, plus lightweight real-time guardrails (centering, distance, stability) and transparent acceptance criteria for each angle.
+1. Misleading interactivity: "Learn More" areas and demo cards look clickable (hover/pointer) but do not trigger actions. This creates dead-ends and unnecessary cognitive load.
+2. State uncertainty: the "Get Started" success toast disappears quickly, making users unsure if the action completed and encouraging repeated clicks.
+3. Validation gap: "Forgot Password" appears to miss immediate client-side email validation, allowing preventable invalid submissions.
+4. Onboarding restriction: requiring a US phone number blocks international testing, including full validation of the 5-angle scan journey.
+
+For the challenge scope, the requested direction is correct: improve scan guidance UX with a responsive mouth guide, add real-time quality feedback, trigger scan-complete notifications with read/unread tracking, and enable patient-dentist messaging.
+
+Main mobile risks to monitor are camera shake, autofocus oscillation, lighting variance, and browser/device differences (especially iOS permission behavior). Product-wise, a practical next step is a "Mock Scan" mode for non-US stakeholders and developers, plus clear guardrails for framing, distance, and stability per angle. This keeps execution realistic while improving data quality and user confidence.

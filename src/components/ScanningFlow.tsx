@@ -21,7 +21,7 @@ export default function ScanningFlow() {
   const [qualityLevel, setQualityLevel] = useState<"good" | "medium" | "low">(
     "medium"
   );
-  const [qualityText, setQualityText] = useState("Posicione o rosto no centro");
+  const [qualityText, setQualityText] = useState("Center your face in the guide");
   const [scanId, setScanId] = useState<string | null>(null);
   const [threadId, setThreadId] = useState<string | null>(null);
   const [messages, setMessages] = useState<
@@ -52,7 +52,7 @@ export default function ScanningFlow() {
         }
       } catch {
         setQualityLevel("low");
-        setQualityText("Permita o acesso à câmera para continuar");
+        setQualityText("Allow camera access to continue");
       }
     }
     startCamera();
@@ -71,9 +71,9 @@ export default function ScanningFlow() {
     }
 
     const messagesByLevel = {
-      good: "Ótimo enquadramento, mantenha estável",
-      medium: "Ajuste levemente distância e centralização",
-      low: "Rosto fora do guia, mova-se para o centro",
+      good: "Great framing, hold steady",
+      medium: "Slightly adjust distance and centering",
+      low: "Face outside the guide, move to center",
     } as const;
 
     const interval = window.setInterval(() => {
@@ -99,7 +99,7 @@ export default function ScanningFlow() {
         body: JSON.stringify({
           patientId: "patient-demo",
           sender: "patient",
-          content: "Início da conversa após conclusão do scan.",
+          content: "Conversation started after scan completion.",
           createThreadOnly: true,
         }),
       });
@@ -275,7 +275,7 @@ export default function ScanningFlow() {
               <CheckCircle2 size={48} className="tw-mx-auto tw-mb-3 tw-text-emerald-400" />
               <h2 className="tw-text-xl tw-font-bold">Scan Complete</h2>
               <p className="tw-mt-2 tw-text-zinc-300">
-                {scanId ? `Scan ${scanId} finalizado.` : "Finalizando upload..."}
+                {scanId ? `Scan ${scanId} completed.` : "Finalizing upload..."}
               </p>
             </div>
 
@@ -299,7 +299,7 @@ export default function ScanningFlow() {
                   ))
                 ) : (
                   <p className="tw-text-xs tw-text-zinc-500">
-                    Nenhuma mensagem ainda. Envie a primeira atualização para a clínica.
+                    No messages yet. Send the first update to the clinic.
                   </p>
                 )}
               </div>
@@ -307,7 +307,7 @@ export default function ScanningFlow() {
                 <input
                   value={draftMessage}
                   onChange={(event) => setDraftMessage(event.target.value)}
-                  placeholder="Escreva uma mensagem..."
+                  placeholder="Write a message..."
                   className="tw-flex-1 tw-rounded-md tw-border tw-border-zinc-700 tw-bg-zinc-950 tw-px-2 tw-py-1 tw-text-sm tw-text-white tw-outline-none tw-ring-0 focus:tw-border-blue-500"
                 />
                 <button
@@ -315,7 +315,7 @@ export default function ScanningFlow() {
                   disabled={isSendingMessage || !threadId}
                   className="tw-rounded-md tw-bg-blue-500 tw-px-3 tw-py-1 tw-text-sm tw-font-semibold tw-text-white disabled:tw-cursor-not-allowed disabled:tw-opacity-50"
                 >
-                  {isSendingMessage ? "..." : "Enviar"}
+                  {isSendingMessage ? "..." : "Send"}
                 </button>
               </div>
             </div>
